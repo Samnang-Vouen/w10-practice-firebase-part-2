@@ -62,7 +62,6 @@ class LibraryViewModel extends ChangeNotifier {
           .toList();
 
       this.data = AsyncValue.success(data);
-
     } catch (e) {
       // 3- Fetch is unsucessfull
       data = AsyncValue.error(e);
@@ -74,4 +73,14 @@ class LibraryViewModel extends ChangeNotifier {
 
   void start(Song song) => playerState.start(song);
   void stop(Song song) => playerState.stop();
+
+  Future<void> likeSong(Song song) async {
+    try {
+      await songRepository.likeSong(song.id, song.likes);
+      fetchSong();
+    } catch (e) {
+      data = AsyncValue.error(e);
+      notifyListeners();
+    }
+  }
 }

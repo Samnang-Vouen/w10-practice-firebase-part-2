@@ -30,6 +30,20 @@ class SongRepositoryFirebase extends SongRepository {
   }
 
   @override
+  Future<void> likeSong(String id, int currentLikes) async {
+    final Uri likeUri = FirebaseConfig.baseUrl.replace(path: '/songs/$id.json');
+    
+    final http.Response response = await http.patch(
+      likeUri,
+      body: json.encode({'likes': currentLikes + 1}),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update likes');
+    }
+  }
+
+  @override
   Future<Song?> fetchSongById(String id) async {
     return null;
   }
