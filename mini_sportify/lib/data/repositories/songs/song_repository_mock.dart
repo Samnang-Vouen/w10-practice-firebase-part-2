@@ -7,7 +7,7 @@ class SongRepositoryMock implements SongRepository {
   final List<Song> _songs = [  ];
 
   @override
-  Future<List<Song>> fetchSongs() async {
+  Future<List<Song>> fetchSongs({forceFetch = false}) async {
     return Future.delayed(Duration(seconds: 4), () {
       throw _songs;
     });
@@ -27,5 +27,10 @@ class SongRepositoryMock implements SongRepository {
   Future<void> likeSong(String id, int currentLikes) {
     // TODO: implement likeSong
     throw UnimplementedError();
+  }
+
+  @override
+  void clearCache() {
+    // TODO: implement clearCache
   }
 }
